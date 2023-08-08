@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useFetch from "../../../hooks/useFetch";
+import { useSelector } from "react-redux";
+import Img from "../../../components/lazyLoadImage/Img";
+import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 import "./style.scss";
 const HeroBanner = () => {
   const navigate = useNavigate();
   const [background, setBackground] = useState("");
   const [query, setQuery] = useState("");
+  const { url } = useSelector((state) => state.home);
+
+  const { data, loading } = useFetch("/movie/upcoming");
+
+  useEffect(() => {
+    const bg =
+      url.backdrop +
+      data?.results?.[Math.floor(Math?.random() * 20)]?.backdrop_path;
+    setBackground(bg);
+  }, [data]);
 
   const serachQueryHandler = (event) => {
     if (event.key === "Enter" && query.length > 0) {
@@ -13,7 +27,15 @@ const HeroBanner = () => {
   };
   return (
     <div className="heroBanner">
-      <div className="wrapper">
+      {!loading && (
+        <div className="backdrop-img">
+          <Img src={background} />
+        </div>
+      )}
+
+      <div className="opacity-layer"></div>
+
+      <ContentWrapper>
         <div className="heroBannerContent">
           <span className="title">Welcome.</span>
           <span className="subTitle">
@@ -31,7 +53,7 @@ const HeroBanner = () => {
             {/*<button>Search</button>*/}
           </div>
         </div>
-      </div>
+      </ContentWrapper>
     </div>
   );
 };
