@@ -50,7 +50,6 @@ const HeroBanner = () => {
             />
 
             <button>Search</button>
-            {/*<button>Search</button>*/}
           </div>
         </div>
       </ContentWrapper>
