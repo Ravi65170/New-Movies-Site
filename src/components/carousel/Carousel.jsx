@@ -80,7 +80,7 @@ const Carousel = ({ data, loading, endpoint, title }) => {
                   <div className="textBlock">
                     <spn className="title">{item.title || item.name}</spn>
                     <spn className="date">
-                      {dayjs(item.release_Date).format("MMM D, YYYY")}
+                      {dayjs(item.release_date).format("MMM D, YYYY")}
                     </spn>
                   </div>
                 </div>
